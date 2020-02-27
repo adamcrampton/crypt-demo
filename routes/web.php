@@ -14,4 +14,4 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', '\App\Http\Controllers\DemoController@index');
-Route::get('/crypt', '\App\Http\Controllers\DemoController@crypt');
+Route::get('/crypt/{string}/{action}', '\App\Http\Controllers\DemoController@crypt');
