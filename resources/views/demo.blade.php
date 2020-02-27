@@ -19,8 +19,8 @@
         <h1>Generate Key</h1>
         <form class="demo-form" style="width: 100%; max-width: 330px; padding: 15px; margin: auto;">
             <div class="form-group">
-                <label for="inputOne" class="sr-only">Input One</label>
-                <input type="text" id="inputOne" class="form-control" placeholder="Input One" required autofocus>
+                <label for="generateKey" class="sr-only">Generate Key</label>
+                <input type="text" id="generateKey" class="form-control" placeholder="Enter a string" required autofocus>
             </div>
             <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
         </form>
@@ -30,8 +30,8 @@
         <h1>Decrypt Key</h1>
         <form class="demo-form" style="width: 100%; max-width: 330px; padding: 15px; margin: auto;">
             <div class="form-group">
-                <label for="inputOne" class="sr-only">Input One</label>
-                <input type="text" id="inputOne" class="form-control" placeholder="Input One" required autofocus>
+                <label for="decryptKey" class="sr-only">Decrypt Key</label>
+                <input type="text" id="decryptKey" class="form-control" placeholder="Enter Key" required autofocus>
             </div>
             <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
         </form>
