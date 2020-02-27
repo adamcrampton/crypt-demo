@@ -33,7 +33,7 @@ class DemoController extends Controller
         }
 
         return response()->json([
-            'data' => $output
+            'output' => $output
         ]);
     }
 }
