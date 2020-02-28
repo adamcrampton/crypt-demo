@@ -12,19 +12,23 @@ class DemoController extends Controller
         return view('demo');
     }
 
-    public function crypt($string, $action)
+    public function crypt($string, $action, $length = 12)
     {
+        // Set up config.
         $method = Config::get('crypt.method');
         $key = hash('sha256', Config::get('secret_key'));
         $iv = substr(hash('sha256', Config::get('secret_iv')), 0, 16) ;
 
+        // Encrypt/Decrypt and return encrypted string/decryption result.
         switch ($action) {
             case 'encrypt':
-                $output = base64_encode(openssl_encrypt($string, $method, $key, 0, $iv));
+                // $output = base64_encode(openssl_encrypt($string, $method, $key, 0, $iv));
+                $output = bin2hex(openssl_encrypt($string, $method, $key, 0, $iv));
                 break;
 
             case 'decrypt':
-                $output = openssl_decrypt(base64_decode($string), $method, $key, 0, $iv);
+                // $output = openssl_decrypt(base64_decode($string), $method, $key, 0, $iv);
+                $output = openssl_decrypt(hex2bin($string), $method, $key, 0, $iv);
                 break;
             
             default:
