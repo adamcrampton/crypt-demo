@@ -4,15 +4,20 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Config;
+use Illuminate\Support\Facades\Log;
+use Hashids\Hashids;
 
 class DemoController extends Controller
 {
     public function index()
     {
-        return view('demo');
+        // 3-character prefix used as init vector with numeric key.
+        return view('demo')->with([
+            'prefixes' => Config::get('crypt.prefixes')
+        ]);
     }
 
-    public function crypt($string, $action, $length = 12)
+    public function crypt($string, $action)
     {
         // Set up config.
         $method = Config::get('crypt.method');
@@ -22,13 +27,11 @@ class DemoController extends Controller
         // Encrypt/Decrypt and return encrypted string/decryption result.
         switch ($action) {
             case 'encrypt':
-                // $output = base64_encode(openssl_encrypt($string, $method, $key, 0, $iv));
-                $output = bin2hex(openssl_encrypt($string, $method, $key, 0, $iv));
+                $output = base64_encode(openssl_encrypt($string, $method, $key, 0, $iv));
                 break;
 
             case 'decrypt':
-                // $output = openssl_decrypt(base64_decode($string), $method, $key, 0, $iv);
-                $output = openssl_decrypt(hex2bin($string), $method, $key, 0, $iv);
+                $output = openssl_decrypt(base64_decode($string), $method, $key, 0, $iv);
                 break;
             
             default:
@@ -39,5 +42,17 @@ class DemoController extends Controller
         return response()->json([
             'output' => $output
         ]);
+    }
+
+    public function obfuscate($string, $prefix)
+    {
+        return $prefix . '-' . str_pad(base_convert($string, 10, 6), 7, 0, STR_PAD_LEFT);
+    }
+
+    public function deobfuscate($string, $prefix)
+    {
+        $parts = explode('-', $string);
+
+        return $prefix . '-' . base_convert($string[1], 6, 10);
     }
 }
